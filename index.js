@@ -21,39 +21,48 @@ const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
 
+var arg = ""
+
 
 app.post("/upload",multipartMiddleware,(req,res)=> {
 
-    var arg = ""
+    
 
     fs.readdir('./uploads',(err,data)=> {
-        data.forEach((ele)=> {
-            console.log(ele)
-            arg = ele
-            var base = new String(ele).substring(ele.lastIndexOf("/") + 1)
+        // data.forEach((ele)=> {
+        //     console.log(ele)
+        //     arg = ele
+        //     var base = new String(ele).substring(ele.lastIndexOf("/") + 1)
 
-    if(base.lastIndexOf(".") != -1) {
-        base = base.substring(0,base.lastIndexOf("."))
-        console.log(base)
-    }
+    // if(base.lastIndexOf(".") != -1) {
+    //     base = base.substring(0,base.lastIndexOf("."))
+    //     console.log(base)
+    // }
 
-        })
 
+        // })
+
+        for(let i = 0; i<data.length;i++) {
+
+            arg = data[data.length-1]
+            var base = new String(arg).substring(arg.lastIndexOf("/") + 1)
+
+        }
 
         ffmpeg(`./uploads/${arg}`).
         toFormat('mp3').
         saveToFile('converted.mp3',()=> {
 
-        })
-
-        res.json({
-            "message":"success"
-        })
+        }) 
         
     })
 
     
 
+    
+    res.json({
+        "message":"success"
+    })
 
         
         
@@ -66,6 +75,16 @@ app.get('/converted',(req,res)=> {
 })
 
 app.put('/unlink',(req,res)=> {
+
+    fs.readdir("./uploads", (err, files) => {
+        if (err) throw err;
+      
+        for (const file of files) {
+          fs.unlink(path.join("./uploads", file), (err) => {
+            if (err) throw err;
+          });
+        }
+      });
     fs.unlink(path.join(__dirname, 'converted.mp3'),()=> {
         console.log("ok")
     })
@@ -73,6 +92,8 @@ app.put('/unlink',(req,res)=> {
         message:"done"
     })
 })
+
+
 
 
 app.listen("8090",()=> {
