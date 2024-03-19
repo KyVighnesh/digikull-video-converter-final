@@ -27,12 +27,17 @@
 
     app.post("/upload",(req,res,next)=>{
 
-        if(process.env.CREATED == "false"){
-            fs.mkdirSync(path.join(__dirname,'./uploads'))
-            process.env.CREATED = true;
-        }
+        fs.readdir('./uploads',(err,data)=> {
+            if(data){
+                console.log(data)
+                next()
+            }
 
-        next()
+            else {
+                fs.mkdirSync(path.join(__dirname,'./uploads'))
+                next()
+            }
+        })
     },multipartMiddleware,(req,res)=> {
 
             fs.readdir('./uploads',(err,data)=> {
