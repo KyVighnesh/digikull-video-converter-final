@@ -27,7 +27,7 @@
 
     app.post("/upload",(req,res,next)=>{
 
-        fs.readdir('./uploads',(err,data)=> {
+        fs.readdir(path.join(__dirname,'./uploads'),(err,data)=> {
             if(data){
                 console.log(data)
                 next()
