@@ -7,8 +7,8 @@ const path=require("path");
 
 
 const s3 = new AWS.S3({
-    accessKeyId: process.env.ID,
-    secretAccessKey: process.env.KEY
+    accessKeyId: "AKIAWJXUR4N6GLU72NAQ",
+    secretAccessKey: "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"
 })
 
 const fileUploadS3=(file)=>{
