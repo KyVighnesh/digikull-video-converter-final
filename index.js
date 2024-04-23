@@ -16,6 +16,9 @@
         origin:'http://localhost:3000/'
     }))
 
+    app.options('*', cors());
+
+
 
     const fs = require("fs")
 
