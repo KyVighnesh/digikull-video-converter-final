@@ -60,7 +60,7 @@
         })
     }
 
-    app.post("/upload",uploaded.single('file'),async (req,res)=> {
+    app.post("/upload",uploaded.single('file'),async (req,res,next)=> {
 
         fs.readdir('./uploads',async (err,data)=> {
             target = data.filter((ele)=> {
@@ -75,7 +75,7 @@
 
                 await convertToMp3(output)
 
-                fs.readFile(output,async (err,music)=> {
+                fs.readFile(output,(err,music)=> {
 
                     fileUploadS3(music).then((data)=> {
                         res.json({
@@ -84,7 +84,7 @@
                         })  
 
 
-                    })
+                    }).catch((err)=>next(new Error(err)))
                 })
 
                 fs.unlink(output,(err)=> {
