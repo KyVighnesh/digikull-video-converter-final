@@ -12,7 +12,9 @@
 
     
     app.use(express.json())
-    app.use(cors())
+    app.use(cors({
+        origin:'https://digikull-video-converter-final.onrender.com'
+    }))
 
 
     const fs = require("fs")
