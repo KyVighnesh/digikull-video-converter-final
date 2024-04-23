@@ -1,5 +1,6 @@
     const express = require("express")
     const app = express();
+    const cors = require("cors")
     app.use(cors({
         origin:'http://localhost:3000/'
     }))
@@ -12,14 +13,10 @@
       });
     const  multipart = require('connect-multiparty');
     const path=require("path");
-    const cors = require("cors")
     require('dotenv').config()
     const {fileUploadS3} = require('./services/s3Service')
     const AWS = require('aws-sdk');
     const multer = require('multer');
-
-
-
     
     app.use(express.json())
   
