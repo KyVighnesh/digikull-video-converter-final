@@ -13,7 +13,7 @@
     
     app.use(express.json())
     app.use(cors({
-        origin:'https://digikull-video-converter-final.onrender.com'
+        origin:'http://localhost:3000/'
     }))
 
 
